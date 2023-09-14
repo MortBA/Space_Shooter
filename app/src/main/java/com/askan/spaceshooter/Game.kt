@@ -29,11 +29,13 @@ class Game(context: Context) : SurfaceView(context), Runnable, SurfaceHolder.Cal
     private lateinit var gameThread : Thread
     private var isGameOver = false
     private var entities = ArrayList<Entity>()
+    private lateinit var canvas: Canvas
     private val paint = Paint()
     private val player = Player(resources)
     private var distanceTraveled = 0
     private var maxDistanceTraveled = 0
     private val jukebox = Jukebox(context.assets)
+    private lateinit var  UI: UI
 
 
     @Volatile
@@ -59,11 +61,8 @@ class Game(context: Context) : SurfaceView(context), Runnable, SurfaceHolder.Cal
 
     private fun render() {
 
-        val canvas = aquireAndLockCanvas() ?: return
-
+        canvas = aquireAndLockCanvas() ?: return
         canvas.drawColor(Color.BLACK)
-
-        //draw the game to the surface
 
         for(entity in entities) {
             entity.render(canvas, paint)
@@ -71,29 +70,10 @@ class Game(context: Context) : SurfaceView(context), Runnable, SurfaceHolder.Cal
 
         player.render(canvas, paint)
 
-        renderHud(canvas, paint)
+        UI = UI(canvas, paint)
+        UI.renderHud(isGameOver, distanceTraveled, player.health)
 
         holder.unlockCanvasAndPost(canvas)
-    }
-
-    private fun renderHud(canvas: Canvas, paint: Paint) {
-        val textSize = 48f
-        val textMargin = 10f
-        paint.color = Color.WHITE
-        paint.textAlign = Paint.Align.LEFT
-        paint.textSize = textSize
-        if(!isGameOver) {
-            canvas.drawText("Health: ${player.health}", textMargin, textSize, paint)
-            canvas.drawText("Traveled: $distanceTraveled", textMargin, textSize*2, paint)
-        }else {
-            paint.textAlign = Paint.Align.CENTER
-            val centerX = STAGE_WIDTH/2f
-            val centerY = STAGE_HEIGHT/2f
-            canvas.drawText("GAME OVER!!!!", centerX, centerY, paint)
-            canvas.drawText("(press to restart)", centerX, centerY+textSize, paint)
-        }
-
-
     }
 
     private fun aquireAndLockCanvas() : Canvas? {
