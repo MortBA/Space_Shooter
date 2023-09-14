@@ -1,6 +1,8 @@
 package com.askan.spaceshooter
 
 import android.content.res.Resources
+import android.graphics.Canvas
+import android.graphics.Paint
 import androidx.core.math.MathUtils.clamp
 
 const val PLAYER_HEIGHT = 60
@@ -14,7 +16,9 @@ const val START_HEALTH = 3
 const val START_POSITION = 10f
 
 class Player(res: Resources) : BitmapEntity() {
+    private var timeHit : Long = 0
     var health = START_HEALTH
+    var alpha: Int = 255
     init {
         setSprite(loadBitmap(res, R.drawable.player_hori_1, PLAYER_HEIGHT))
         respawn()
@@ -44,9 +48,22 @@ class Player(res: Resources) : BitmapEntity() {
             setTop(0f)
         }
 
+        if ((timeHit + 1000) < System.currentTimeMillis()) {
+            alpha = 255
+        }
+
+    }
+    override fun onCollision(that: Entity) {
+        alpha = 100
+        if ((timeHit + 1000) < System.currentTimeMillis()) {
+            timeHit = System.currentTimeMillis()
+            health--
+        }
     }
 
-    override fun onCollision(that: Entity) {
-        health--
+    override fun render(canvas: Canvas, paint: Paint) {
+        paint.alpha = alpha // Set the alpha value before drawing the bitmap
+        canvas.drawBitmap(bitmap, x, y, paint)
+        super.render(canvas, paint)
     }
 }
