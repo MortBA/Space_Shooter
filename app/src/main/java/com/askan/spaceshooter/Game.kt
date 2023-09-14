@@ -13,7 +13,7 @@ import java.util.Random
 const val STAGE_WIDTH = 1080
 const val STAGE_HEIGHT = 720
 const val STAR_COUNT = 40
-const val ENEMY_COUNT = 6
+const val ENEMY_COUNT = 3
 val RNG = Random(uptimeMillis())
 @Volatile var isBoosting = false
 @Volatile var playerSpeed = 0f
@@ -61,7 +61,7 @@ class Game(context: Context) : SurfaceView(context), Runnable, SurfaceHolder.Cal
 
         val canvas = aquireAndLockCanvas() ?: return
 
-        canvas.drawColor(Color.BLUE)
+        canvas.drawColor(Color.BLACK)
 
         //draw the game to the surface
 

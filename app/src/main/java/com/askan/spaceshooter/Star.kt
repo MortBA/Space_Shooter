@@ -5,7 +5,7 @@ import android.graphics.Color
 import android.graphics.Paint
 
 class Star : Entity() {
-    private val color = Color.YELLOW
+    private val color = Color.argb(255, RNG.nextInt(256), RNG.nextInt(256), RNG.nextInt(256))
     private val radius = (RNG.nextInt(6)+2).toFloat()
 
     init {
@@ -24,7 +24,7 @@ class Star : Entity() {
 
     override fun update() {
         super.update()
-        x += -playerSpeed
+        x += -playerSpeed * (radius / 7)
         if (right() < 0) {
             setLeft(STAGE_WIDTH.toFloat())
             setTop(RNG.nextInt(STAGE_HEIGHT - height.toInt()).toFloat())
