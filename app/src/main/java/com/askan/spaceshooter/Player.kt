@@ -48,13 +48,18 @@ class Player(res: Resources) : BitmapEntity() {
             setTop(0f)
         }
 
-        if ((timeHit + 1000) < System.currentTimeMillis()) {
+        if ((timeHit + 1000) > System.currentTimeMillis()) {
+            if(alpha == 0) {
+                alpha = 255
+            }else {
+                alpha = 0
+            }
+        }else {
             alpha = 255
         }
 
     }
     override fun onCollision(that: Entity) {
-        alpha = 100
         if ((timeHit + 1000) < System.currentTimeMillis()) {
             timeHit = System.currentTimeMillis()
             health--
