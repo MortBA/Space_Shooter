@@ -3,11 +3,11 @@ package com.askan.spaceshooter
 import android.content.res.Resources
 import androidx.core.math.MathUtils.clamp
 
-const val PLAYER_HEIGHT = 80
+const val PLAYER_HEIGHT = 60
 const val ACCELERATION = 1.1f
 const val MIN_VELOCITY = 0.1f
 const val MAX_VELOCITY = 20f
-const val GRAVITY = 1.1f
+const val GRAVITY = 2f
 const val LIFT = -(GRAVITY*2f)
 const val DRAG = 0.97f
 const val START_HEALTH = 3
@@ -16,7 +16,7 @@ const val START_POSITION = 10f
 class Player(res: Resources) : BitmapEntity() {
     var health = START_HEALTH
     init {
-        setSprite(loadBitmap(res, R.drawable.player, PLAYER_HEIGHT))
+        setSprite(loadBitmap(res, R.drawable.player_hori_1, PLAYER_HEIGHT))
         respawn()
     }
 

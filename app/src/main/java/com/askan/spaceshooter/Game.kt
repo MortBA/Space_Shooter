@@ -14,7 +14,7 @@ const val STAGE_WIDTH = 1080
 const val STAGE_HEIGHT = 720
 const val STAR_COUNT = 40
 const val ENEMY_COUNT = 6
-public val RNG = Random(uptimeMillis())
+val RNG = Random(uptimeMillis())
 @Volatile var isBoosting = false
 @Volatile var playerSpeed = 0f
 
@@ -105,12 +105,18 @@ class Game(context: Context) : SurfaceView(context), Runnable, SurfaceHolder.Cal
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action and MotionEvent.ACTION_MASK) {
-            MotionEvent.ACTION_UP -> isBoosting = false
+            MotionEvent.ACTION_UP -> {
+                isBoosting = false
+                jukebox.stop(SFX.engine_on)
+            }
             MotionEvent.ACTION_DOWN -> {
                 if(isGameOver) {
                     restart()
                 }
+
+                jukebox.play(SFX.engine_on, -1)
                 isBoosting = true
+
             }
         }
         return true
@@ -124,6 +130,7 @@ class Game(context: Context) : SurfaceView(context), Runnable, SurfaceHolder.Cal
         distanceTraveled = 0
         maxDistanceTraveled = prefs.getInt(LONGEST_DIST, 0)
         isGameOver = false
+        jukebox.play(SFX.game_start, 0)
     }
 
     private fun update() {
@@ -156,7 +163,13 @@ class Game(context: Context) : SurfaceView(context), Runnable, SurfaceHolder.Cal
 
                 enemy.onCollision(player)
                 player.onCollision(enemy)
-                jukebox.play(SFX.crashed)
+                jukebox.play(SFX.crashed, 0)
+
+                if(player.health < 1) {
+                    jukebox.stop(SFX.engine_on)
+                    jukebox.play(SFX.player_destroyed, 0)
+                    isBoosting = false
+                }
             }
         }
     }
@@ -164,7 +177,7 @@ class Game(context: Context) : SurfaceView(context), Runnable, SurfaceHolder.Cal
     fun pause() {
         isRunning = false
         try{
-            gameThread.join();
+            gameThread.join()
         }
         catch(e: Exception){/*swallow exception, we're exiting anyway*/}
     }
