@@ -7,12 +7,12 @@ const val ENEMY_SPAWN_OFFSET = STAGE_WIDTH*2
 class Enemy(res : Resources) : BitmapEntity() {
     init {
         var id = R.drawable.enemy_1
-        when(RNG.nextInt(5) + 1){
-            1 -> id = R.drawable.enemy_hori_1
-            2 -> id = R.drawable.enemy_hori_2
-            3 -> id = R.drawable.enemy_hori_3
-            4 -> id = R.drawable.enemy_hori_4
-            5 -> id = R.drawable.enemy_hori_5
+        when(RNG.nextInt(5)){
+            0 -> id = R.drawable.enemy_hori_1
+            1 -> id = R.drawable.enemy_hori_2
+            2 -> id = R.drawable.enemy_hori_3
+            3 -> id = R.drawable.enemy_hori_4
+            4 -> id = R.drawable.enemy_hori_5
         }
         val bmp = loadBitmap(res, id, ENEMY_HEIGHT)
         setSprite(flipVertically(bmp))

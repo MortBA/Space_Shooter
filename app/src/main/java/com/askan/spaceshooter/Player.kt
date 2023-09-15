@@ -14,11 +14,14 @@ const val LIFT = -(GRAVITY*2f)
 const val DRAG = 0.97f
 const val START_HEALTH = 3
 const val START_POSITION = 10f
+const val ALPHA_OPAQUE = 255
+const val ALPHA_TRANSPARENT = 0
+const val RECOVERY_TIME = 1000
 
 class Player(res: Resources) : BitmapEntity() {
     private var timeHit : Long = 0
     var health = START_HEALTH
-    var alpha: Int = 255
+    var alpha: Int = ALPHA_OPAQUE
     init {
         setSprite(loadBitmap(res, R.drawable.player_hori_1, PLAYER_HEIGHT))
         respawn()
@@ -38,7 +41,6 @@ class Player(res: Resources) : BitmapEntity() {
         }
         velX = clamp(velX, MIN_VELOCITY, MAX_VELOCITY)
         velY = clamp(velY, -MAX_VELOCITY, MAX_VELOCITY)
-
         y += velY
         playerSpeed = velX
 
@@ -48,19 +50,19 @@ class Player(res: Resources) : BitmapEntity() {
             setTop(0f)
         }
 
-        if ((timeHit + 1000) > System.currentTimeMillis()) {
-            if(alpha == 0) {
-                alpha = 255
+        if ((timeHit + RECOVERY_TIME) > System.currentTimeMillis()) {
+            if(alpha == ALPHA_TRANSPARENT) {
+                alpha = ALPHA_OPAQUE
             }else {
-                alpha = 0
+                alpha = ALPHA_TRANSPARENT
             }
         }else {
-            alpha = 255
+            alpha = ALPHA_OPAQUE
         }
 
     }
     override fun onCollision(that: Entity) {
-        if ((timeHit + 1000) < System.currentTimeMillis()) {
+        if ((timeHit + RECOVERY_TIME) < System.currentTimeMillis()) {
             timeHit = System.currentTimeMillis()
             health--
         }

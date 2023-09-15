@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
         val prefs = getSharedPreferences(PREFS, MODE_PRIVATE)
         val maxDistanceTraveled = prefs.getInt(LONGEST_DIST, 0)
         val highscore = findViewById<TextView>(R.id.highscore)
-        highscore.text = "Longest Distance: $maxDistanceTraveled km"
+        val tempHighScore = resources.getString(R.string.longest_traveled) + maxDistanceTraveled.toString()
+        highscore.text = tempHighScore
     }
 }

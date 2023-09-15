@@ -35,7 +35,7 @@ class Game(context: Context) : SurfaceView(context), Runnable, SurfaceHolder.Cal
     private var distanceTraveled = 0
     private var maxDistanceTraveled = 0
     private val jukebox = Jukebox(context.assets)
-    private lateinit var  UI: UI
+    private lateinit var UI: UI
 
 
     @Volatile
@@ -70,7 +70,7 @@ class Game(context: Context) : SurfaceView(context), Runnable, SurfaceHolder.Cal
 
         player.render(canvas, paint)
 
-        UI = UI(canvas, paint)
+        UI = UI(context, canvas, paint)
         UI.renderHud(isGameOver, distanceTraveled, player.health)
 
         holder.unlockCanvasAndPost(canvas)

@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Space Shooter</string>
+    <string name="highscore">Highscore: </string>
     <string name="start_game">Start Game</string>
+    <string name="health">Health: </string>
+    <string name="traveled">Traveled: </string>
+    <string name="game_over">GAME OVER!!!!</string>
+    <string name="restart">(press to restart)</string>
+    <string name="longest_traveled">"Longest Distance: "</string>
 </resources>
