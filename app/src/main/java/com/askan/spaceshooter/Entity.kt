@@ -3,16 +3,14 @@ package com.askan.spaceshooter
 import android.graphics.Canvas
 import android.graphics.Paint
 
-abstract class Entity() {
+abstract class Entity {
     var x = 0f
     var y = 0f
     var width = 0f
     var height = 0f
     var velX = 0f
     var velY = 0f
-
     init{
-        //Empty for now
     }
 
     open fun update() {}

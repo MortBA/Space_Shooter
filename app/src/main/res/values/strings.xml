@@ -7,4 +7,5 @@
     <string name="game_over">GAME OVER!!!!</string>
     <string name="restart">(press to restart)</string>
     <string name="longest_traveled">"Longest Distance: "</string>
+    <string name="ammo">Ammo:</string>
 </resources>

@@ -14,13 +14,13 @@ const val STAGE_WIDTH = 1080
 const val STAGE_HEIGHT = 720
 const val STAR_COUNT = 40
 const val ENEMY_COUNT = 3
+const val POWER_UP_COUNT = 2
 val RNG = Random(uptimeMillis())
-@Volatile var isBoosting = false
 @Volatile var playerSpeed = 0f
 
 const val PREFS = "com.askan.spaceshooter"
 const val LONGEST_DIST = "longest_distance"
-
+//TODO: Game design changes: Power-Ups spawn rate, Speed over time, Enemy spawn rate over time
 
 class Game(context: Context) : SurfaceView(context), Runnable, SurfaceHolder.Callback {
     private val prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
@@ -31,10 +31,10 @@ class Game(context: Context) : SurfaceView(context), Runnable, SurfaceHolder.Cal
     private var entities = ArrayList<Entity>()
     private lateinit var canvas: Canvas
     private val paint = Paint()
-    private val player = Player(resources)
     private var distanceTraveled = 0
     private var maxDistanceTraveled = 0
     private val jukebox = Jukebox(context.assets)
+    private val player = Player(context, jukebox)
     private lateinit var UI: UI
 
 
@@ -48,8 +48,12 @@ class Game(context: Context) : SurfaceView(context), Runnable, SurfaceHolder.Cal
             entities.add(Star())
         }
         for(i in 0 until ENEMY_COUNT) {
-            entities.add(Enemy(resources))
+            entities.add(Enemy(context, jukebox))
         }
+
+        entities.add(Ammo(context, jukebox))
+        entities.add(Repair(context, jukebox))
+
     }
 
     override fun run() {
@@ -71,7 +75,7 @@ class Game(context: Context) : SurfaceView(context), Runnable, SurfaceHolder.Cal
         player.render(canvas, paint)
 
         UI = UI(context, canvas, paint)
-        UI.renderHud(isGameOver, distanceTraveled, player.health)
+        UI.renderHud(isGameOver, distanceTraveled, player.health, player.ammo)
 
         holder.unlockCanvasAndPost(canvas)
     }
@@ -84,19 +88,23 @@ class Game(context: Context) : SurfaceView(context), Runnable, SurfaceHolder.Cal
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
+        val screenWidth = resources.displayMetrics.widthPixels
         when (event.action and MotionEvent.ACTION_MASK) {
             MotionEvent.ACTION_UP -> {
-                isBoosting = false
-                jukebox.stop(SFX.engine_on)
+                if (event.pointerCount < 2) {
+                    player.boost(false)
+                }
+                if (event.x > screenWidth/2) {
+                    player.shoot()
+                }
             }
             MotionEvent.ACTION_DOWN -> {
+                if (event.x < screenWidth/2) {
+                    player.boost(true)
+                }
                 if(isGameOver) {
                     restart()
                 }
-
-                jukebox.play(SFX.engine_on, -1)
-                isBoosting = true
-
             }
         }
         return true
@@ -137,21 +145,26 @@ class Game(context: Context) : SurfaceView(context), Runnable, SurfaceHolder.Cal
 
     private fun checkCollision() {
 
-        for (i in STAR_COUNT until entities.size) {
-            var enemy = entities[i]
+        for (i in STAR_COUNT until STAR_COUNT + ENEMY_COUNT) {
+            val enemy = entities[i]
             if(isColliding(enemy, player)) {
-
                 enemy.onCollision(player)
                 player.onCollision(enemy)
-                jukebox.play(SFX.crashed, 0)
-
-                if(player.health < 1) {
-                    jukebox.stop(SFX.engine_on)
-                    jukebox.play(SFX.player_destroyed, 0)
-                    isBoosting = false
+            }
+            for(laser in player.laserShots) {
+                if(isColliding(laser, enemy)) {
+                    laser.onCollision(enemy)
                 }
             }
         }
+        for (i in STAR_COUNT+ENEMY_COUNT until STAR_COUNT+ENEMY_COUNT+POWER_UP_COUNT){
+            val powerUp = entities[i]
+            if(isColliding(powerUp, player)) {
+                powerUp.onCollision(player)
+            }
+        }
+
+
     }
 
     fun pause() {

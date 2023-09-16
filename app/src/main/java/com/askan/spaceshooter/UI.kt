@@ -22,13 +22,13 @@ class UI(context: Context, canvas: Canvas, paint: Paint) {
         resources = context.resources
     }
 
-    fun renderHud(isGameOver: Boolean, distanceTraveled: Int, playerHealth : Int) {
+    fun renderHud(isGameOver: Boolean, distanceTraveled: Int, playerHealth : Int, playerAmmo: Int) {
 
         paint.color = textColor
         paint.textSize = textSize
 
         if(!isGameOver) {
-            gameplayHud(playerHealth, distanceTraveled)
+            gameplayHud(playerHealth, distanceTraveled, playerAmmo)
         }else {
             restartUI()
         }
@@ -42,9 +42,9 @@ class UI(context: Context, canvas: Canvas, paint: Paint) {
         canvas.drawText(resources.getString(R.string.restart), centerX, centerY+textSize, paint)
     }
 
-    private fun gameplayHud(playerHealth: Int, distanceTraveled: Int) {
+    private fun gameplayHud(playerHealth: Int, distanceTraveled: Int, playerAmmo: Int) {
         paint.textAlign = Paint.Align.LEFT
-        canvas.drawText("${resources.getString(R.string.health)} $playerHealth", textMargin, textSize, paint)
+        canvas.drawText("${resources.getString(R.string.health)} $playerHealth ${resources.getString(R.string.ammo)} $playerAmmo", textMargin, textSize, paint)
         canvas.drawText("${resources.getString(R.string.traveled)} $distanceTraveled", textMargin, textSize*2, paint)
     }
 

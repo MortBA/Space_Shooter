@@ -1,10 +1,10 @@
 package com.askan.spaceshooter
 
-import android.content.res.Resources
+import android.content.Context
 
 const val ENEMY_HEIGHT = 50
 const val ENEMY_SPAWN_OFFSET = STAGE_WIDTH*2
-class Enemy(res : Resources) : BitmapEntity() {
+class Enemy(context: Context, jukebox: Jukebox) : BitmapEntity(context, jukebox) {
     init {
         var id = R.drawable.enemy_1
         when(RNG.nextInt(5)){
@@ -14,7 +14,7 @@ class Enemy(res : Resources) : BitmapEntity() {
             3 -> id = R.drawable.enemy_hori_4
             4 -> id = R.drawable.enemy_hori_5
         }
-        val bmp = loadBitmap(res, id, ENEMY_HEIGHT)
+        val bmp = loadBitmap(context.resources, id, ENEMY_HEIGHT)
         setSprite(flipVertically(bmp))
         respawn()
     }
@@ -25,6 +25,7 @@ class Enemy(res : Resources) : BitmapEntity() {
     }
 
     override fun onCollision(that: Entity) {
+        if(that is Player) jukebox.play(SFX.crashed, 0)
         respawn()
     }
 
