@@ -8,4 +8,7 @@
     <string name="restart">(press to restart)</string>
     <string name="longest_traveled">"Longest Distance: "</string>
     <string name="ammo">Ammo:</string>
+    <string name="delete">Delete</string>
+    <string name="saved_scores">Saved Scores</string>
+    <string name="scores">Scores</string>
 </resources>
