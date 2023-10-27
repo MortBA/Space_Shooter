@@ -1,16 +1,23 @@
-package com.askan.spaceshooter
+package com.askan.spaceshooter.entities
 
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import androidx.core.math.MathUtils.clamp
+import com.askan.spaceshooter.Jukebox
+import com.askan.spaceshooter.NUM_SHOOTING_SFX
+import com.askan.spaceshooter.R
+import com.askan.spaceshooter.RNG
+import com.askan.spaceshooter.SFX
+import com.askan.spaceshooter.STAGE_HEIGHT
+import com.askan.spaceshooter.playerSpeed
 
 const val PLAYER_HEIGHT = 60
 const val ACCELERATION = 1.1f
 const val MIN_VELOCITY = 0.1f
 const val MAX_VELOCITY = 20f
 const val GRAVITY = 2f
-const val LIFT = -(GRAVITY*2f)
+const val LIFT = -(GRAVITY *2f)
 const val DRAG = 0.97f
 const val START_HEALTH = 3
 const val START_AMMO = 3

@@ -1,4 +1,4 @@
-package com.askan.spaceshooter
+package com.askan.spaceshooter.entities
 
 import android.graphics.Canvas
 import android.graphics.Paint

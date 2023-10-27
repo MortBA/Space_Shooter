@@ -1,4 +1,4 @@
-package com.askan.spaceshooter
+package com.askan.spaceshooter.saved.scores
 
 import android.content.Context
 import java.io.BufferedReader

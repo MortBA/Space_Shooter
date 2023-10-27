@@ -1,4 +1,4 @@
-package com.askan.spaceshooter
+package com.askan.spaceshooter.entities
 
 import android.content.Context
 import android.content.res.Resources
@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Matrix
 import android.graphics.Paint
+import com.askan.spaceshooter.Jukebox
 
 open class BitmapEntity(context: Context, jukebox: Jukebox) : Entity() {
     lateinit var bitmap : Bitmap

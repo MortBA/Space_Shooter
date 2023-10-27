@@ -42,10 +42,10 @@ class UI(context: Context, canvas: Canvas, paint: Paint) {
         canvas.drawText(resources.getString(R.string.restart), centerX, centerY+textSize, paint)
     }
 
-    private fun gameplayHud(playerHealth: Int, distanceTraveled: Int, playerAmmo: Int) {
+    private fun gameplayHud(playerHealth: Int, time: Int, coinsCollected: Int) {
         paint.textAlign = Paint.Align.LEFT
-        canvas.drawText("${resources.getString(R.string.health)} $playerHealth ${resources.getString(R.string.ammo)} $playerAmmo", textMargin, textSize, paint)
-        canvas.drawText("${resources.getString(R.string.traveled)} $distanceTraveled", textMargin, textSize*2, paint)
+        canvas.drawText("${resources.getString(R.string.health)} $playerHealth ${resources.getString(R.string.coinsCollected)} $coinsCollected", textMargin, textSize, paint)
+        canvas.drawText("${resources.getString(R.string.time)} $time", textMargin, textSize*2, paint)
     }
 
     fun setTextSize(size: Float) {

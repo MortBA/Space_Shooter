@@ -13,7 +13,7 @@
         android:theme="@style/Theme.SpaceShooter"
         tools:targetApi="31">
         <activity
-            android:name=".ScoresActivity"
+            android:name=".saved.scores.ScoresActivity"
             android:exported="false" />
         <activity
             android:name=".GameActivity"

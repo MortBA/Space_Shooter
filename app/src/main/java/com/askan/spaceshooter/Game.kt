@@ -8,6 +8,13 @@ import android.os.SystemClock.uptimeMillis
 import android.view.MotionEvent
 import android.view.SurfaceHolder
 import android.view.SurfaceView
+import com.askan.spaceshooter.entities.Ammo
+import com.askan.spaceshooter.entities.Enemy
+import com.askan.spaceshooter.entities.Entity
+import com.askan.spaceshooter.entities.Player
+import com.askan.spaceshooter.entities.Repair
+import com.askan.spaceshooter.entities.Star
+import com.askan.spaceshooter.entities.isColliding
 import java.util.Random
 
 const val STAGE_WIDTH = 1080
@@ -36,7 +43,6 @@ class Game(context: Context) : SurfaceView(context), Runnable, SurfaceHolder.Cal
     private val jukebox = Jukebox(context.assets)
     private val player = Player(context, jukebox)
     private lateinit var UI: UI
-
 
     @Volatile
     private var isRunning = false

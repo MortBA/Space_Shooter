@@ -1,15 +1,21 @@
-package com.askan.spaceshooter
+package com.askan.spaceshooter.entities
 
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import com.askan.spaceshooter.RNG
+import com.askan.spaceshooter.STAGE_HEIGHT
+import com.askan.spaceshooter.STAGE_WIDTH
+import com.askan.spaceshooter.playerSpeed
 
 const val MAX_RGB_VAL = 256
 const val MAX_STAR_SIZE = 6
 const val MIN_STAR_SIZE = 2
 class Star : Entity() {
-    private val color = Color.argb(ALPHA_OPAQUE, RNG.nextInt(MAX_RGB_VAL), RNG.nextInt(MAX_RGB_VAL), RNG.nextInt(
-        MAX_RGB_VAL))
+    private val color = Color.argb(
+        ALPHA_OPAQUE, RNG.nextInt(MAX_RGB_VAL), RNG.nextInt(MAX_RGB_VAL), RNG.nextInt(
+        MAX_RGB_VAL
+        ))
     private val radius = (RNG.nextInt(MAX_STAR_SIZE)+ MIN_STAR_SIZE).toFloat()
 
     init {

@@ -1,9 +1,16 @@
-package com.askan.spaceshooter
+package com.askan.spaceshooter.entities
 
 import android.content.Context
+import com.askan.spaceshooter.Jukebox
+import com.askan.spaceshooter.R
+import com.askan.spaceshooter.RNG
+import com.askan.spaceshooter.SFX
+import com.askan.spaceshooter.STAGE_HEIGHT
+import com.askan.spaceshooter.STAGE_WIDTH
+import com.askan.spaceshooter.playerSpeed
 
 const val ENEMY_HEIGHT = 50
-const val ENEMY_SPAWN_OFFSET = STAGE_WIDTH*2
+const val ENEMY_SPAWN_OFFSET = STAGE_WIDTH *2
 class Enemy(context: Context, jukebox: Jukebox) : BitmapEntity(context, jukebox) {
     init {
         var id = R.drawable.enemy_1
@@ -21,7 +28,7 @@ class Enemy(context: Context, jukebox: Jukebox) : BitmapEntity(context, jukebox)
 
     override fun respawn() {
         x = (STAGE_WIDTH + RNG.nextInt(ENEMY_SPAWN_OFFSET)).toFloat()
-        y = RNG.nextInt(STAGE_HEIGHT- ENEMY_HEIGHT).toFloat()
+        y = RNG.nextInt(STAGE_HEIGHT - ENEMY_HEIGHT).toFloat()
     }
 
     override fun onCollision(that: Entity) {
